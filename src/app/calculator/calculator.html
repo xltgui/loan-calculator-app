@@ -3,33 +3,62 @@
     <h1 class="text-5xl font-bold">Calculadora de Empréstimos</h1>
   </div>
 
-  <div class="grid grid-cols-6 gap-4 text-black bg-white p-4 rounded-lg shadow-md">
-    <div>
+  <div class="grid grid-cols-6 gap-4 text-black bg-white p-5 rounded-lg shadow-md">
+
+    <div class="relative">
       <label class="block font-semibold mb-1">Data Inicial</label>
-      <input type="date" [(ngModel)]="startDate" (ngModelChange)="checkFormValidity()" [max]="endDate" class="border rounded p-2 w-full">
+      <input type="date" [(ngModel)]="startDate" (ngModelChange)="checkFormValidity()" name="startDateField" #startDateField="ngModel" required
+       [max]="endDate" class="border rounded p-2 w-full">
+      <span *ngIf="startDateField.invalid && startDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+        Campo obrigatório
+      </span>
     </div>
-    <div>
+
+    <div class="relative">
       <label id="endDate" class="block font-semibold mb-1">Data Final</label>
-      <input type="date" [(ngModel)]="endDate" (ngModelChange)="checkFormValidity()" [min]="startDate" class="border rounded p-2 w-full">
+      <input type="date" [(ngModel)]="endDate" (ngModelChange)="checkFormValidity()" name="endDateField" #endDateField="ngModel" required
+       [min]="startDate" class="border rounded p-2 w-full">
+      <span *ngIf="endDateField.invalid && endDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+        Campo obrigatório
+      </span>
     </div>
-    <div>
+
+
+    <div class="relative">
       <label id="firstPaymentDate" class="block font-semibold mb-1">Primeiro Pagamento</label>
-      <input type="date" [(ngModel)]="firstPaymentDate" (ngModelChange)="checkFormValidity()" [min]="startDate" [max]="endDate"  class="border rounded p-2 w-full">
+      <input type="date" [(ngModel)]="firstPaymentDate" (ngModelChange)="checkFormValidity()" name="firstPaymentDateField" #firstPaymentDateField="ngModel" required
+       [min]="startDate" [max]="endDate"  class="border rounded p-2 w-full">
+      <span *ngIf="firstPaymentDateField.invalid && firstPaymentDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+        Campo obrigatório
+      </span>
     </div>
-    <div>
+
+
+    <div class="relative">
       <label id="amount" class="block font-semibold mb-1">Valor de Empréstimo</label>
-      <input type="number" [(ngModel)]="amount" (ngModelChange)="checkFormValidity()" step="0.01" class="border rounded p-2 w-full">
+      <input type="number" [(ngModel)]="amount" (ngModelChange)="checkFormValidity()" name="amountField" #amountField="ngModel" required
+       step="0.01" class="border rounded p-2 w-full">
+      <span *ngIf="amountField.invalid && amountField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+        Campo obrigatório
+      </span>
     </div>
-    <div>
+
+
+    <div class="relative">
       <label id="interestRate" class="block font-semibold mb-1">Taxa de Juros (%)</label>
-      <input type="number" [(ngModel)]="interestRate" (ngModelChange)="checkFormValidity()" step="0.01" class="border rounded p-2 w-full">
+      <input type="number" [(ngModel)]="interestRate" (ngModelChange)="checkFormValidity()" name="interestRateField" #interestRateField="ngModel" required
+       step="0.01" class="border rounded p-2 w-full">
+      <span *ngIf="interestRateField.invalid && interestRateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+          Campo obrigatório
+      </span>
     </div>
 
     <div class="flex items-end">
       <button 
       [disabled]="isButtonDisabled"
       [ngClass]="{'opacity-50 cursor-not-allowed': isButtonDisabled}"
-      class="bg-orange-800 text-white font-semibold px-4 py-2.5 rounded w-full">
+      class="bg-orange-800 text-white font-semibold px-4 py-2.5 rounded w-full"
+      (click)="calculateLoan()">
       Calcular
       </button>
     </div>
@@ -60,7 +89,18 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Linhas adicionais -->
+      <tr *ngFor="let payment of paymentDetails" class="hover:bg-gray-50">
+        <td class="border border-gray-300 p-2 text-center">{{ payment.competenceDate | date:'dd/MM/yyyy' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.loanAmount | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.outstandingBalance | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.consolidated }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.installmentAmount | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.principalAmortization | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.principalBalance | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.provision | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.accumulatedInterest | currency:'BRL' }}</td>
+        <td class="border border-gray-300 p-2 text-center">{{ payment.paidAmount | currency:'BRL' }}</td>
+      </tr>
     </tbody>
   </table>
 </section>

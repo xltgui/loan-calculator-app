@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoanCalculatorService } from '../services/loan-calculator-service';
+import { PaymentDetailResponse } from '../models/payment-detail-response';
+
 
 @Component({
   selector: 'app-calculator',
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule
   ],
   templateUrl: './calculator.html',
@@ -22,10 +26,34 @@ export class Calculator implements OnInit {
   // Variável para controle do estado do botão
   isButtonDisabled: boolean = true;
 
-  constructor() { }
+
+  paymentDetails: PaymentDetailResponse[] = [];
+
+  constructor(private loanService: LoanCalculatorService) { }
 
   ngOnInit(): void {
     this.checkFormValidity();
+  }
+
+
+  calculateLoan() {
+    const request = {
+      startDate: this.startDate,
+      endDate: this.endDate,
+      firstPaymentDate: this.firstPaymentDate,
+      amount: this.amount,
+      interestRate: this.interestRate
+    };
+
+    
+    this.loanService.calculate(request).subscribe(
+      (response) => {
+        this.paymentDetails = response; // Armazenar a resposta
+      },
+      (error) => {
+        console.error('Erro ao calcular empréstimo:', error);
+      }
+    );
   }
 
   checkFormValidity() {
