@@ -1,59 +1,59 @@
-# LoanCalculator
+# Calculadora de Empréstimos
+Este é um aplicativo web desenvolvido com Angular, que atua como uma calculadora de empréstimos. Ele permite ao usuário inserir os detalhes de um empréstimo (datas, valores e taxas) e, ao clicar em "Calcular", consome uma API de backend para obter um plano de pagamento detalhado.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+## Como executar
 
-## Development server
+### Pré-requisitos
+- **Node.js e npm: (v14.x ou superior)**
+- **Angular CLI: Instale com o comando `npm install -g @angular/cli`**
 
-To start a local development server, run:
-
-```bash
+### 1. Navegue até a pasta raiza do projeto angular
+### 2. Instale as dependências
+```
+npm install
+```
+### 3. Excecute a aplicação:
+```
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Tecnologias
+- **Angular 20**
+- **Tailwind CSS**
+- **Style: SCSS**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-```bash
-ng generate component component-name
+
+## Funcionalidades do Aplicativo
+* **Formulário de Empréstimo**
+    * Um formulário simples e intuitivo para inserir os dados do empréstimo.
+
+* **Validação de Formulário** 
+    * Validação em tempo real para garantir que todos os campos obrigatórios sejam preenchidos.
+
+* **Validação de Datas**
+     * A "Data Final" e o "Primeiro Pagamento" não podem ser anteriores à "Data Inicial".
+        * O calendário desabilita automaticamente as datas inválidas.
+
+* **Integração com API**
+    * Ao clicar em "Calcular", o front-end envia os dados para a API do Spring Boot.
+        * Link: https://github.com/xltgui/loan-calculator-api.git
+
+* **Tabela de Pagamentos**
+    * Uma tabela é exibida com os detalhes do plano de pagamento, incluindo datas, valores de amortização e saldos.
+
+* **Arquitetura**
+    * O projeto segue a estrutura padrão do Angular. Os arquivos mais relevantes são:
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+src/
+└── app/
+├── calculator/                          # 💻 Módulo do componente principal
+    │   ├── calculator.component.html
+    │   ├── calculator.component.scss
+    │   ├── calculator.component.spec.ts
+    │   └── calculator.component.ts      # 🎯 Lógica para validações de campos e chamada da camada de serviço
+    ├── models/                          # 📂 Interface para receber os dados do backend
+    │   └── payment-detail-response.ts
+    └── services/                        # 🛠️ Serviço responsável por chamar a requisição dos detalhes do empréstimo
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
