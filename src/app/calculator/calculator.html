@@ -1,0 +1,66 @@
+<header class="bg-gradient-to-r from-neutral-900 to-yellow-900 text-white p-6 shadow-lg">
+  <div class="text-center mb-5">
+    <h1 class="text-5xl font-bold">Calculadora de Empréstimos</h1>
+  </div>
+
+  <div class="grid grid-cols-6 gap-4 text-black bg-white p-4 rounded-lg shadow-md">
+    <div>
+      <label class="block font-semibold mb-1">Data Inicial</label>
+      <input type="date" [(ngModel)]="startDate" (ngModelChange)="checkFormValidity()" [max]="endDate" class="border rounded p-2 w-full">
+    </div>
+    <div>
+      <label id="endDate" class="block font-semibold mb-1">Data Final</label>
+      <input type="date" [(ngModel)]="endDate" (ngModelChange)="checkFormValidity()" [min]="startDate" class="border rounded p-2 w-full">
+    </div>
+    <div>
+      <label id="firstPaymentDate" class="block font-semibold mb-1">Primeiro Pagamento</label>
+      <input type="date" [(ngModel)]="firstPaymentDate" (ngModelChange)="checkFormValidity()" [min]="startDate" [max]="endDate"  class="border rounded p-2 w-full">
+    </div>
+    <div>
+      <label id="amount" class="block font-semibold mb-1">Valor de Empréstimo</label>
+      <input type="number" [(ngModel)]="amount" (ngModelChange)="checkFormValidity()" step="0.01" class="border rounded p-2 w-full">
+    </div>
+    <div>
+      <label id="interestRate" class="block font-semibold mb-1">Taxa de Juros (%)</label>
+      <input type="number" [(ngModel)]="interestRate" (ngModelChange)="checkFormValidity()" step="0.01" class="border rounded p-2 w-full">
+    </div>
+
+    <div class="flex items-end">
+      <button 
+      [disabled]="isButtonDisabled"
+      [ngClass]="{'opacity-50 cursor-not-allowed': isButtonDisabled}"
+      class="bg-orange-800 text-white font-semibold px-4 py-2.5 rounded w-full">
+      Calcular
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<section class="mt-8 p-4">
+  <table class="w-full border-collapse border border-gray-300 text-sm">
+    <thead>
+      <tr class="bg-gray-200 text-center">
+        <th colspan="3" class="border border-gray-300">Empréstimo</th>
+        <th colspan="2" class="border border-gray-300">Parcela</th>
+        <th colspan="3" class="border border-gray-300">Principal</th>
+        <th colspan="3" class="border border-gray-300">Juros</th>
+      </tr>
+      <tr class="bg-gray-100 text-center">
+        <th class="border border-gray-300">Data Competência</th>
+        <th class="border border-gray-300">Valor de empréstimo</th>
+        <th class="border border-gray-300">Saldo Devedor</th>
+        <th class="border border-gray-300">Consolidada</th>
+        <th class="border border-gray-300">Total</th>
+        <th class="border border-gray-300">Amortização</th>
+        <th class="border border-gray-300">Saldo</th>
+        <th class="border border-gray-300">Provisão</th>
+        <th class="border border-gray-300">Acumulado</th>
+        <th class="border border-gray-300">Pago</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Linhas adicionais -->
+    </tbody>
+  </table>
+</section>
