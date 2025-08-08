@@ -9,18 +9,24 @@
       <label class="block font-semibold mb-1">Data Inicial</label>
       <input type="date" [(ngModel)]="startDate" (ngModelChange)="checkFormValidity()" name="startDateField" #startDateField="ngModel" required
        [max]="endDate" class="border rounded p-2 w-full">
-      <span *ngIf="startDateField.invalid && startDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
-        Campo obrigatório
-      </span>
+  
+       @if(startDateField.invalid && startDateField.touched){
+        <span class="text-red-500 text-xs italic absolute top-full left-0">
+          Campo obrigatório
+        </span>
+      }
     </div>
 
     <div class="relative">
       <label id="endDate" class="block font-semibold mb-1">Data Final</label>
       <input type="date" [(ngModel)]="endDate" (ngModelChange)="checkFormValidity()" name="endDateField" #endDateField="ngModel" required
        [min]="startDate" class="border rounded p-2 w-full">
-      <span *ngIf="endDateField.invalid && endDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
-        Campo obrigatório
-      </span>
+
+      @if(endDateField.invalid && endDateField.touched){
+        <span class="text-red-500 text-xs italic absolute top-full left-0">
+          Campo obrigatório
+        </span>
+      }
     </div>
 
 
@@ -28,9 +34,12 @@
       <label id="firstPaymentDate" class="block font-semibold mb-1">Primeiro Pagamento</label>
       <input type="date" [(ngModel)]="firstPaymentDate" (ngModelChange)="checkFormValidity()" name="firstPaymentDateField" #firstPaymentDateField="ngModel" required
        [min]="startDate" [max]="endDate"  class="border rounded p-2 w-full">
-      <span *ngIf="firstPaymentDateField.invalid && firstPaymentDateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
-        Campo obrigatório
-      </span>
+
+      @if(firstPaymentDateField.invalid && firstPaymentDateField.touched){
+        <span class="text-red-500 text-xs italic absolute top-full left-0">
+          Campo obrigatório
+        </span>
+      }
     </div>
 
 
@@ -38,9 +47,12 @@
       <label id="amount" class="block font-semibold mb-1">Valor de Empréstimo</label>
       <input type="number" [(ngModel)]="amount" (ngModelChange)="checkFormValidity()" name="amountField" #amountField="ngModel" required
        step="0.01" class="border rounded p-2 w-full">
-      <span *ngIf="amountField.invalid && amountField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
-        Campo obrigatório
-      </span>
+
+      @if(amountField.invalid && amountField.touched){
+        <span class="text-red-500 text-xs italic absolute top-full left-0">
+          Campo obrigatório
+        </span>
+      }
     </div>
 
 
@@ -48,9 +60,12 @@
       <label id="interestRate" class="block font-semibold mb-1">Taxa de Juros (%)</label>
       <input type="number" [(ngModel)]="interestRate" (ngModelChange)="checkFormValidity()" name="interestRateField" #interestRateField="ngModel" required
        step="0.01" class="border rounded p-2 w-full">
-      <span *ngIf="interestRateField.invalid && interestRateField.touched" class="text-red-500 text-xs italic absolute top-full left-0">
+
+      @if(interestRateField.invalid && interestRateField.touched){
+        <span class="text-red-500 text-xs italic absolute top-full left-0">
           Campo obrigatório
-      </span>
+        </span>
+      }
     </div>
 
     <div class="flex items-end">
