@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { PaymentDetailResponse } from '../models/payment-detail-response';
 
 @Injectable({
@@ -12,6 +12,11 @@ export class LoanCalculatorService {
   constructor(private http: HttpClient) { }
 
   calculate(request: any): Observable<PaymentDetailResponse[]> {
-    return this.http.post<PaymentDetailResponse[]>(this.apiUrl, request);
+    return this.http.post<PaymentDetailResponse[]>(this.apiUrl, request).pipe(
+      catchError(error => {
+        const message = error.error?.message || 'Validation Error';
+        return throwError( () => message);
+      })
+    );
   }
 }

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoanCalculatorService } from '../services/loan-calculator-service';
 import { PaymentDetailResponse } from '../models/payment-detail-response';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar'
+
 
 
 @Component({
@@ -10,7 +12,8 @@ import { PaymentDetailResponse } from '../models/payment-detail-response';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatSnackBarModule
   ],
   templateUrl: './calculator.html',
   styleUrl: './calculator.scss'
@@ -29,7 +32,10 @@ export class Calculator implements OnInit {
 
   paymentDetails: PaymentDetailResponse[] = [];
 
-  constructor(private loanService: LoanCalculatorService) { }
+  constructor(
+    private loanService: LoanCalculatorService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.checkFormValidity();
@@ -48,10 +54,14 @@ export class Calculator implements OnInit {
     
     this.loanService.calculate(request).subscribe(
       (response) => {
-        this.paymentDetails = response; // Armazenar a resposta
+        this.paymentDetails = response;
       },
-      (error) => {
-        console.error('Erro ao calcular empréstimo:', error);
+      (errorMessage) => {
+        this.snackBar.open(errorMessage, 'Close', {
+          duration: 5000, // fecha após 5 seg
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
       }
     );
   }
